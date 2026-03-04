@@ -2,7 +2,7 @@ import express, { type Request, type Response, type NextFunction } from 'express
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import router from './src/routes/index.js';
+import router from './routes/index.js';
 
 const app = express();
 

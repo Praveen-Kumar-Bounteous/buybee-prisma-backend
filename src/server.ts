@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import app from './app.js';
-import { prisma } from './src/lib/prisma.js';
+import { prisma } from './lib/prisma.js';
 
 // Load environment variables
 dotenv.config();
