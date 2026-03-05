@@ -11,7 +11,7 @@ app.use(cors({
     origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://your-buybee-frontend.vercel.app"
+      "https://buybee-rouge.vercel.app"
     ],
     credentials: true 
 }));
