@@ -33,8 +33,16 @@ export class AuthController {
             maxAge: 7 * 24 * 60 * 60 * 1000 
         });
 
+        res.cookie('accessToken', at, {
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000 
+        })
+
         res.json({ 
             accessToken: at, 
+            refreshToken: rt, 
             role: user.role,
             user: { id: user.id, name: user.name, email: user.email }
         });

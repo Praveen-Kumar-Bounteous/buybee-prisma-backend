@@ -6,10 +6,14 @@ import router from './routes/index.js';
 
 const app = express();
 
-// --- Global Middlewares ---
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    credentials: true // Crucial for reading the Refresh Token Cookie
+    // allowing both local and deployed frontend
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://your-buybee-frontend.vercel.app"
+    ],
+    credentials: true 
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
