@@ -7,22 +7,41 @@ export class ProductController {
         res.status(201).json(product);
     }
 
-    static async getAll(req: Request, res: Response) {
+    static async getAll(_req: Request, res: Response) {
         const products = await ProductService.getAll();
         res.json(products);
+    }
+
+    static async getById(req: any, res: Response) {
+        try {
+            const productbyID = await ProductService.getById(req.params.id);
+            if (!productbyID) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Product Not Found"
+                })
+            }
+            res.json(productbyID);
+        } catch (error: any) {
+            res.status(500).json({
+                success: false,
+                message: `Something went wrong, failed to fetch product ${error.message}`
+            })
+        }
+
     }
 
     static async delete(req: any, res: Response) {
         const result = await ProductService.delete(req.params.id, req.user.id);
 
-        if(result.count == 0){
+        if (result.count == 0) {
             return res.status(404).json({
                 success: false,
                 message: "Product Not Found or Already been deleted"
             })
         }
         res.status(200).json({
-            success: true, 
+            success: true,
             message: "Product Removed! - But Retained in Order History of users if purchased"
         });
     }
@@ -34,9 +53,9 @@ export class ProductController {
 
         // Validation: If no fields are provided in the body, return an error
         if (!updateData || Object.keys(updateData).length === 0) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "Please provide at least one field to update (title, price, etc.)" 
+            return res.status(400).json({
+                success: false,
+                message: "Please provide at least one field to update (title, price, etc.)"
             });
         }
 
@@ -44,20 +63,20 @@ export class ProductController {
             const result = await ProductService.update(id, sellerId, updateData);
 
             if (result.count === 0) {
-                return res.status(404).json({ 
-                    success: false, 
-                    message: "Product not found or unauthorized" 
+                return res.status(404).json({
+                    success: false,
+                    message: "Product not found or unauthorized"
                 });
             }
 
-            res.status(200).json({ 
-                success: true, 
-                message: "Product updated successfully" 
+            res.status(200).json({
+                success: true,
+                message: "Product updated successfully"
             });
         } catch (error: any) {
-            res.status(500).json({ 
-                success: false, 
-                message: error.message 
+            res.status(500).json({
+                success: false,
+                message: error.message
             });
         }
     }
