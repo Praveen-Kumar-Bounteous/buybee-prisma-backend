@@ -31,6 +31,13 @@ app.get('/', (req: Request, res: Response) => {
     });
 });
 
+app.get('/api/v1', (req: Request, res: Response) => {
+  res.redirect(
+    302,
+    "https://github.com/Praveen-Kumar-Bounteous/buybee-prisma-backend/blob/6d693b70dfabcb81eb59ddeca8e7d2770b2426e2/README.md"
+  );
+});
+
 // 2. Health Check "/health" (For Load Balancers/Docker)
 app.get('/health', (req: Request, res: Response) => {
     res.status(200).json({
